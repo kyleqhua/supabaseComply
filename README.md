@@ -11,3 +11,5 @@
 - Set the port to public to allow external access.
 
 3. Paste port link to front end here: https://v0-supabase-authentication-pink.vercel.app/dashboard
+
+![](https://github.com/kyleqhua/supabaseComply/blob/main/complyEx.gif)
