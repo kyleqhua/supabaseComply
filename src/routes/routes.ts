@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import { createClient } from "@supabase/supabase-js";
-import { adminSupabase } from "../config/supabaseClient";
+import dotenv from "dotenv";
+dotenv.config();
 const router = express.Router();
 
 const BEARER_TOKEN = process.env.BEARER_TOKEN;
@@ -8,6 +9,7 @@ const BEARER_TOKEN = process.env.BEARER_TOKEN;
 const projectsRefs = {
   [process.env.PROJECT_1_REF!]: process.env.PROJECT_1_SERVICE_ROLE_KEY,
   [process.env.PROJECT_2_REF!]: process.env.PROJECT_2_SERVICE_ROLE_KEY,
+  // Add more projects here
 };
 
 function createSupabaseClient(projectRef: string) {
@@ -17,12 +19,7 @@ function createSupabaseClient(projectRef: string) {
   }
 
   const supabaseUrl = `https://${projectRef}.supabase.co`;
-  return createClient(supabaseUrl, serviceRoleKey, {
-      auth: {
-          autoRefreshToken: false,
-          persistSession: false,
-      },
-  });
+  return createClient(supabaseUrl, serviceRoleKey);
 };
 
 /**
@@ -46,7 +43,8 @@ router.get("/mfa", async (req: Request, res: Response): Promise<any> => {
         console.log(allUsers);
      
         // Get a list of all users
-        const { data: users, error } = await adminSupabase.auth.admin.listUsers(); 
+        //I NEED THIS LINE TO WORK WHY
+       // const { data: users, error } = await adminSupabase.auth.admin.listUsers(); 
 
         res.json({ users: allUsers });
     } catch (err) {
